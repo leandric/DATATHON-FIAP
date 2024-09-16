@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 # DATATHON-FIAP
-=======
 DATATHON-PASSOS-MAGICOS
 ==============================
 
@@ -13,7 +11,7 @@ $ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:latest
 2. Executar o notebook 01-lss-carga-dados-banco.ipynb no diretorio notebooks
 
 
-
+w
 
 
 
@@ -71,7 +69,6 @@ Organiza do projeto.
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
->>>>>>> 5974036 (Primeiro commit - estrutura de projeto criada)
 
 
 

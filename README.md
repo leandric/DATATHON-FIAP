@@ -6,7 +6,7 @@ DATATHON-PASSOS-MAGICOS
 
 1. Subi um container MySQL:
 ```
-$ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -d mysql:latest
+$ docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql:latest
 ```
 2. Executar o notebook 01-lss-carga-dados-banco.ipynb no diretorio notebooks
 

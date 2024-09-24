@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
 import missingno as msno
 import matplotlib.pyplot as plt
 

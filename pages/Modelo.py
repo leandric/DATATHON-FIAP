@@ -1,6 +1,7 @@
 import streamlit as st
 import pickle
 import numpy as np
+import pandas as pd
 
 # Configura o layout para widescreen
 st.set_page_config(page_title="Aplicação Widescreen", layout="wide")
@@ -9,12 +10,10 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown('''
-Aqui está o texto em markdown que explica o projeto de Deep Learning, incluindo as decisões tomadas em cada etapa:
-
----
 
 # Projeto de Deep Learning para Predição do Ponto de Virada Educacional
-
+---
+                
 Este projeto de Deep Learning tem como objetivo prever se um aluno atingiu o "Ponto de Virada" em seu desenvolvimento educacional. O dataset contém diversas métricas de desempenho educacional e psicossocial de alunos. Utilizamos redes neurais para resolver essa tarefa de classificação binária.
 
 ## Preparação dos Dados
@@ -96,19 +95,7 @@ historico = model.fit(X_train, y_train, epochs=100, batch_size=32, validation_sp
 
 Para avaliar o desempenho do modelo ao longo do tempo, plotamos gráficos que mostram a evolução da perda, acurácia e AUC tanto no conjunto de treinamento quanto no de validação.
 
-```python
-fig, ax = plt.subplots(1, 3,  figsize=(14, 5))
-ax[0].plot(historico.history['loss'], color='#111487', linewidth=3, label="Perda de treinamento")
-ax[0].plot(historico.history['val_loss'], color='#EFA316', linewidth=3, label="Perda da validação")
-
-ax[1].plot(historico.history['accuracy'], color='#111487', linewidth=3, label="Acurácia de treinamento")
-ax[1].plot(historico.history['val_accuracy'], color='#EFA316', linewidth=3, label="Acurácia da validação")
-
-ax[2].plot(historico.history['AUC'], color='#111487', linewidth=3, label="AUC de treinamento")
-ax[2].plot(historico.history['val_AUC'], color='#EFA316', linewidth=3, label="AUC da validação")
-
-plt.show()
-```
+![Gráfico de Performance](https://raw.githubusercontent.com/leandric/DATATHON-FIAP/refs/heads/main/img/grafico_performance.png)
 
 ## Avaliação no Conjunto de Teste
 
@@ -118,62 +105,81 @@ Após o treinamento, o modelo foi avaliado no conjunto de teste. Os resultados m
 test_loss, test_acc, test_auc = model.evaluate(X_test, y_test)
 print(f'Test loss: {test_loss}, Test accuracy: {test_acc}, Test AUC: {test_auc}')
 ```
+**Test loss: 0.42, Test accuracy: 0.81, Test AUC: 0.89**
 
 ## Considerações Finais
 
 As decisões tomadas ao longo deste projeto, como a normalização dos dados, a atribuição de pesos às classes desbalanceadas e o uso de Dropout para evitar overfitting, foram essenciais para garantir que o modelo tenha bom desempenho e generalize bem para novos dados. A abordagem de usar uma rede neural com uma arquitetura simples e funções de ativação adequadas também contribuiu para a eficiência do processo de aprendizado.
-
----
-
-Esse texto explica como o projeto foi construído e as motivações por trás de cada escolha. Se precisar de mais detalhes ou alterações, é só avisar!
-
 
 ''')
 
 
 with col2:
     # Título da aplicação
-    st.title("Protótipo do modelo")
-
-    # Carregar o modelo
-    with open('modelos/model.pkl', 'rb') as f:
-        model = pickle.load(f)
-
-    # Carregar o scaler
-    with open('modelos/scaler.pkl', 'rb') as f:
-        scaler = pickle.load(f)
-
-    # Carregar o label_encoder
-    with open('modelos/label_encoder.pkl', 'rb') as f:
-        label_encoder = pickle.load(f)
-
-    # Função para predição
-    def fazer_predicao(pedra, ieg, ips, ipp, ida, iaa, ian, model, scaler, label_encoder):
-        # Estruturar os dados de entrada
-        input_data = np.array([[pedra, ieg, ips, ipp, ida, iaa, ian]])
+    st.markdown('# Protótipo')
+    with st.expander('Aplicação'):
+        st.title(''' Modelo''')
         
-        # Transformar a coluna 'PEDRA' com o LabelEncoder
-        input_data[:, 0] = label_encoder.transform(input_data[:, 0])
-        
-        # Escalar os dados de entrada
-        input_data_scaled = scaler.transform(input_data)
-        
-        # Fazer a predição usando o modelo treinado
-        predicao = model.predict(input_data_scaled)
-        
-        # Retornar o valor da predição
-        return "Sim" if predicao[0] > 0.5 else "Não"
+        # Carregar o modelo
+        with open('modelos/model.pkl', 'rb') as f:
+            model = pickle.load(f)
 
-    # Interface para o usuário
-    pedra = st.selectbox("Selecione o valor de PEDRA", label_encoder.classes_)
-    ieg = st.number_input("Insira o valor de IEG", min_value=0.0, max_value=10.0, step=0.1)
-    ips = st.number_input("Insira o valor de IPS", min_value=0.0, max_value=10.0, step=0.1)
-    ipp = st.number_input("Insira o valor de IPP", min_value=0.0, max_value=10.0, step=0.1)
-    ida = st.number_input("Insira o valor de IDA", min_value=0.0, max_value=10.0, step=0.1)
-    iaa = st.number_input("Insira o valor de IAA", min_value=0.0, max_value=10.0, step=0.1)
-    ian = st.number_input("Insira o valor de IAN", min_value=0.0, max_value=10.0, step=0.1)
+        # Carregar o scaler
+        with open('modelos/scaler.pkl', 'rb') as f:
+            scaler = pickle.load(f)
 
-    # Botão para fazer a predição
-    if st.button("Fazer Predição"):
-        resultado = fazer_predicao(pedra, ieg, ips, ipp, ida, iaa, ian, model, scaler, label_encoder)
-        st.write(f"Resultado da Predição: {resultado}")
+        # Carregar o label_encoder
+        with open('modelos/label_encoder.pkl', 'rb') as f:
+            label_encoder = pickle.load(f)
+
+        # Função para predição
+        def fazer_predicao(pedra, ieg, ips, ipp, ida, iaa, ian, model, scaler, label_encoder):
+            # Estruturar os dados de entrada
+            input_data = np.array([[pedra, ieg, ips, ipp, ida, iaa, ian]])
+            
+            # Transformar a coluna 'PEDRA' com o LabelEncoder
+            input_data[:, 0] = label_encoder.transform(input_data[:, 0])
+            
+            # Escalar os dados de entrada
+            input_data_scaled = scaler.transform(input_data)
+            
+            # Fazer a predição usando o modelo treinado
+            predicao = model.predict(input_data_scaled)
+            
+            # Retornar o valor da predição
+            return "Sim" if predicao[0] > 0.5 else "Não"
+
+        # Interface para o usuário
+        pedra = st.selectbox("Selecione o valor de PEDRA", label_encoder.classes_)
+        ieg = st.number_input("Insira o valor de IEG", min_value=0.0, max_value=10.0, step=0.1)
+        ips = st.number_input("Insira o valor de IPS", min_value=0.0, max_value=10.0, step=0.1)
+        ipp = st.number_input("Insira o valor de IPP", min_value=0.0, max_value=10.0, step=0.1)
+        ida = st.number_input("Insira o valor de IDA", min_value=0.0, max_value=10.0, step=0.1)
+        iaa = st.number_input("Insira o valor de IAA", min_value=0.0, max_value=10.0, step=0.1)
+        ian = st.number_input("Insira o valor de IAN", min_value=0.0, max_value=10.0, step=0.1)
+
+        # Botão para fazer a predição
+        if st.button("Fazer Predição"):
+            resultado = fazer_predicao(pedra, ieg, ips, ipp, ida, iaa, ian, model, scaler, label_encoder)
+            st.write(f"Resultado da Predição: {resultado}")
+
+    df = pd.read_csv('https://raw.githubusercontent.com/leandric/DATATHON-FIAP/refs/heads/main/data/base_tratada.csv')
+
+    columns = [
+    'NOME',
+    'ano',
+    #'INDE',
+    'PEDRA',    
+    'IEG',
+    'IPS',
+    'IPP',
+    'IDA',
+    'IAA' ,
+    'IAN',
+    'PONTO_VIRADA'
+    ]
+    # Deletar as linhas que têm NaN na coluna 'PONTO_VIRADA'
+    df = df.dropna(subset=['PONTO_VIRADA'])
+    df = df[columns].copy()
+    st.markdown('## Tabela para Teste')
+    st.dataframe(df.round(2))

@@ -51,13 +51,13 @@ scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 ```
 
-3. **Divisão em conjuntos de treino e teste**: Utilizamos `train_test_split` com uma proporção de 80/20 para separar os dados em conjuntos de treinamento e teste. Usamos `stratify=y` para garantir que a distribuição da variável alvo seja mantida nos dois conjuntos, dado que os dados são desbalanceados.
+3. **Divisão em conjuntos de treino e teste**: Utilizamos `train_test_split` com uma proporção de 80/20 para separar os dados em conjuntos de treinamento e teste. Usamos `stratify=y` para garantir que a distribuição da variável alvo seja mantida nos dois conjuntos, visto que os dados são desbalanceados.
 
 ```python
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=64, stratify=y)
 ```
 
-4. **Pesos das classes**: Como as classes da variável alvo estão desbalanceadas (mais alunos não atingiram o ponto de virada do que os que atingiram), foi calculado o peso das classes com base na proporção de cada classe, para que o modelo não seja enviesado pela classe majoritária.
+4. **Pesos das classes**: Como as classes da variável alvo estão desbalanceadas (mais alunos não atingiram o ponto de virada do que os que atingiram), foi calculado o peso das classes com base na proporção de cada classe, para que o modelo não seja enviesado pela classe com maior volume.
 
 ```python
 class_weights = class_weight.compute_class_weight(class_weight='balanced', classes=np.unique(y_train), y=y_train)

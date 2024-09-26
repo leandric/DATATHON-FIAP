@@ -3,7 +3,7 @@
 
 Este projeto utiliza análise exploratória de dados e um modelo de Deep Learning para prever se um aluno atingiu o "Ponto de Virada" em seu desenvolvimento educacional. O projeto foi desenvolvido utilizando Python e Streamlit para visualização interativa.
 
-[Clique aqui para acessar o projeto]()
+[Clique aqui para acessar o projeto](https://datathon-fiap-nv7enwub9tw364zkkvqy8a.streamlit.app/)
 ![aplicacao](img/GravacaodeTela.gif)
 
 

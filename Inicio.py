@@ -353,7 +353,7 @@ with tab4:
                 "name": "Leandro Soares da Silva",
                 "photo": "https://media.licdn.com/dms/image/v2/D4D03AQEgGiOQOS8Jag/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1724201241884?e=1732752000&v=beta&t=KTga6jt8C9MV0iYlbKRJgLnedn0hG7zAjfvvz1Pdin8",
                 "graduation": "Bacharel em Engenharia de Computação",
-                "description": "Analista de BI",
+                "description": "Analista de Dados",
                 "linkedin": "https://www.linkedin.com/in/leandro"
             },
         ]

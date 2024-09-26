@@ -118,7 +118,7 @@ with col2:
     # Título da aplicação
     st.markdown('# Protótipo')
     with st.expander('Aplicação'):
-        st.title(''' Modelo''')
+        st.title(''' Simular Ponto de Virada''')
         
         # Carregar o modelo
         with open('modelos/model.pkl', 'rb') as f:
